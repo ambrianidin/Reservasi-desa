@@ -64,7 +64,7 @@
         <div class="layout-inner">
             <!-- [ Layout sidenav ] Start -->
             <div id="layout-sidenav" class="layout-sidenav sidenav sidenav-vertical bg-white logo-dark">
-                <div class="app-brand demo">
+                <div class="app-brand demo">zz
                     <span class="app-brand-logo de">
                         <img src="{{asset ('be/img/logo.png') }}" alt="Brand Logo" class="img-fluid">
                     </span>
