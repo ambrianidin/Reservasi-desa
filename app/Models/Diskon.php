@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Diskon extends Model
 {
@@ -18,4 +19,26 @@ class Diskon extends Model
         'tanggal_berakhir',
         'status',
     ];
+
+    protected static function booted()
+    {
+        static::retrieved(function ($diskon) {
+
+            $today = Carbon::today();
+
+            if ($diskon->tanggal_mulai > $today) {
+                $statusBaru = 'nonaktif';
+            } elseif ($diskon->tanggal_berakhir < $today) {
+                $statusBaru = 'expired';
+            } else {
+                $statusBaru = 'aktif';
+            }
+
+            if ($diskon->status !== $statusBaru) {
+                $diskon->status = $statusBaru;
+                $diskon->saveQuietly();
+            }
+
+        });
+    }
 }

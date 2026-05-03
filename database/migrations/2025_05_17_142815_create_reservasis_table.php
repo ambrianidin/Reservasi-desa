@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_pelanggan');
             $table->unsignedBigInteger('id_paket');
             $table->unsignedBigInteger('id_diskon');
+            $table->unsignedBigInteger('id_jenis_pembayaran');
             $table->string('email');
             $table->string('nama', 255)->nullable();            
             $table->string('tgl_reservasi_wisata')->nullable(false);
@@ -23,11 +24,12 @@ return new class extends Migration
             $table->integer('jumlah_peserta');
             $table->bigInteger('total_bayar');
             $table->text('file_bukti_tf');
-            $table->enum('status_reservasi_wisata', ['pesan', 'dibayar', 'selesai', 'batal']);
+            $table->enum('status_reservasi_wisata', ['confirm','pesan', 'dibayar', 'selesai', 'batal']);
             $table->timestamps();
             $table->foreign('id_pelanggan')->references('id')->on('pelanggans')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_paket')->references('id')->on('paket_wisatas')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('id_diskon')->references('id')->on('diskons')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('id_jenis_pembayaran')->references('id')->on('jenis_pembayarans')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -18,25 +18,30 @@ class ConfirmReservController extends Controller
         ], compact('reservasis'));
     }
 
+   
     public function updateStatus(Request $request)
     {
-        $request->validate([
-            'reservasi_id' => 'required|exists:reservasis,id',
-            'status' => 'required|in:pesan,dibayar,selesai,batal'
-        ]);
-
         $reservasi = Reservation::findOrFail($request->reservasi_id);
 
-        // Jika klik tombol ✔ konfirmasi, ubah ke "dibayar"
-        if ($request->has('confirm_bayar')) {
-            $reservasi->update(['status_reservasi_wisata' => 'dibayar']);
-            return back()->with('success', 'Reservasi telah dikonfirmasi sebagai Dibayar.');
+        // Jika tombol centang diklik (artinya mengonfirmasi pembayaran)
+        if ($request->has('confirm_pesan')) {
+            $reservasi = Reservation::find($request->reservasi_id);
+            $reservasi->status_reservasi_wisata = 'pesan';
+            $reservasi->save();
+            return back();
         }
 
-        // Jika tidak klik tombol, ubah status sesuai dropdown
-        $reservasi->update(['status_reservasi_wisata' => $request->status]);
-        return back()->with('success', 'Status reservasi berhasil diperbarui ke ' . ucfirst($request->status) . '.');
+        // Jika dropdown diubah ke "selesai" atau "batal"
+        if ($request->status) {
+            $reservasi->status_reservasi_wisata = $request->status;
+            $reservasi->save();
+
+            return redirect()->back()->with('success', 'Status reservasi diperbarui.');
+        }
+
+        return redirect()->back()->with('error', 'Tidak ada tindakan yang dipilih.');
     }
+
 
 
     /**

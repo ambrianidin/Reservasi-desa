@@ -45,7 +45,16 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto1" class="form-label">Pict 1</label>
-                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*" value="{{ $paketwisata->foto1 ?? '' }}" required>
+                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*">
+
+@if($paketwisata->foto1)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $paketwisata->foto1) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group col-md-6">
@@ -57,24 +66,60 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto2" class="form-label">Pict 2</label>
-                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" value="{{ $paketwisata->foto2 ?? '' }}" required>
+                   <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*">
+
+@if($paketwisata->foto2)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $paketwisata->foto2) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="foto3" class="form-label">Pict 3</label>
-                    <input class="form-control" type="file" name="foto3" id="foto3" accept="image/*" value="{{ $paketwisata->foto3 ?? '' }}">
+                    <input class="form-control" type="file" name="foto3" id="foto3" accept="image/*">
+
+@if($paketwisata->foto3)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $paketwisata->foto3) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto4" class="form-label">Pict 4</label>
-                    <input class="form-control" type="file" name="foto4" id="foto4" accept="image/*" value="{{ $paketwisata->foto4 ?? '' }}">
+                    <input class="form-control" type="file" name="foto4" id="foto4" accept="image/*">
+
+@if($paketwisata->foto4)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $paketwisata->foto4) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="foto5" class="form-label">Pict 5</label>
-                    <input class="form-control" type="file" name="foto5" id="foto5" accept="image/*" value="{{ $paketwisata->foto5 ?? '' }}">
+                    <input class="form-control" type="file" name="foto5" id="foto5" accept="image/*">
+
+@if($paketwisata->foto5)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $paketwisata->foto5) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
             </div>

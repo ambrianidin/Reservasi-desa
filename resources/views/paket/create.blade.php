@@ -49,14 +49,17 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Harga</label>
-                    <input type="number" name="harga_per_pack" id="harga_per_pack" class="form-control" value="{{ old('harga_per_pack', session('form_data.harga_per_pack')) }}" required>
+                    <input type="number" name="harga_per_pack" id="harga_per_pack" class="form-control @error('harga_per_pack') is-invalid @enderror" value="{{ old('harga_per_pack', session('form_data.harga_per_pack')) }}" required>
+                    @error('harga_per_pack')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto2" class="form-label">Pict 2</label>
-                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" required>
+                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*">
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group col-md-6">

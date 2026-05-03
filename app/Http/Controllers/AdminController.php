@@ -11,9 +11,24 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.index', [
-            'title' => 'Admin Dashboard',
-        ]);
+        $totalBerita      = \App\Models\Berita::count();
+        $totalUser        = \App\Models\User::whereIn('level', ['admin', 'bendahara', 'pemilik'])->where('aktif', 1)->count();
+        $totalHomestay    = \App\Models\Homestay::count();
+        $totalWisata      = \App\Models\ObyekWisata::count();
+        $totalPaket       = \App\Models\PaketWisata::count();
+
+        $userGrowth = $totalUser;
+
+        $aktivitasTerbaru = collect([
+            \App\Models\ObyekWisata::latest()->take(2)->get()->map(fn($i) => ['nama' => $i->nama_wisata, 'kategori' => 'Wisata']),
+            \App\Models\Homestay::latest()->take(2)->get()->map(fn($i) => ['nama' => $i->nama_penginapan, 'kategori' => 'Homestay']),
+            \App\Models\PaketWisata::latest()->take(1)->get()->map(fn($i) => ['nama' => $i->nama_paket, 'kategori' => 'Paket']),
+        ])->flatten(1)->take(5);
+
+        return view('admin.index', compact(
+            'totalBerita', 'totalUser', 'totalHomestay',
+            'totalWisata', 'totalPaket', 'userGrowth', 'aktivitasTerbaru'
+        ));
     }
 
 

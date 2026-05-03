@@ -17,10 +17,10 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->string('fasilitas');
             $table->text('foto1');
-            $table->text('foto2');
-            $table->text('foto3');
-            $table->text('foto4');
-            $table->text('foto5');
+            $table->text('foto2')->nullable();
+            $table->text('foto3')->nullable();
+            $table->text('foto4')->nullable();
+            $table->text('foto5')->nullable();
             $table->timestamps();
         });
     }

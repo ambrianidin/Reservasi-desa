@@ -9988,6 +9988,10 @@ a.bg-linux-darker:hover, a.bg-linux-darker:focus {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+.alert-danger {
+    color: #721c24 !important;
+}
+
 /* Tambahkan panah (triangle) */
 .custom-tooltip[title]:hover:before {
     content: '';
@@ -10018,14 +10022,12 @@ a.bg-linux-darker:hover, a.bg-linux-darker:focus {
     font-size: 0.8rem;
 }
 
-li.active-sidebar,
-li:hover {
+li.active-sidebar li:hover {
     position: relative;
     background-color: #e4e4e4;
 }
 
-li.active-sidebar::before,
-li:hover::before {
+li.active-sidebar::before li:hover::before {
     content: '';
     position: absolute;
     left: 0;
@@ -10036,7 +10038,7 @@ li:hover::before {
     border-radius: 0 4px 4px 0;
 }
 
-li.active-sidebar::before,
+li.active-sidebar::before 
 li:hover::before {
     transition: all 0.3s ease;
 }

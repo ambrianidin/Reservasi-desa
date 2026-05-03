@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $pakets = PaketWisata::all();
         $beritas = Berita::with('kategori')->latest()->take(3)->get();
-        $obyekwisatas = ObyekWisata::with('kategoriWisata')->latest()->take(6)->get();
+        $obyekwisatas = ObyekWisata::with('kategoriWisata')->latest()->take(3)->get();
 
         return view('home.index', [
             'title' => 'Home',

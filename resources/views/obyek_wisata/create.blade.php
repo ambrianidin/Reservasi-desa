@@ -70,7 +70,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto2" class="form-label">Pict 2</label>
-                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" required>
+                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" >
                     <div class="clearfix"></div>
                 </div>
                 <div class="form-group col-md-6">

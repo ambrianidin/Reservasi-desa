@@ -103,7 +103,8 @@
 
     <div class="footer">
         Terima kasih telah melakukan reservasi bersama kami.<br>
-        Tunjukkan nota ini kepada petugas saat memulai perjalanan wisata Anda.
+        Tunjukkan nota ini kepada petugas saat memulai perjalanan wisata Anda. <br><br>
+        <span class="highlight" >Note: Apabila ada yang ingin di tanyakan bisa menghubungi contact person di PAGE CONTACT</span>
     </div>
 </body>
 </html>

@@ -11,8 +11,21 @@ class BendaharaController extends Controller
      */
     public function index()
     {
+        $totalPendapatan = \App\Models\Reservation::sum('total_bayar');
+        $totalReservasi  = \App\Models\Reservation::count();
+        $reservasiSelesai = \App\Models\Reservation::where('status_reservasi_wisata', 'selesai')->count();
+        $diskonAktif     = \App\Models\Diskon::where('status', 'aktif')
+                            ->orWhere(function($q) {
+                                $q->whereDate('tanggal_mulai', '<=', now())
+                                ->whereDate('tanggal_berakhir', '>=', now());
+                            })->get();
+
         return view('bendahara.index', [
-            'title' => 'Bendahara Dashboard',
+            'title'           => 'Bendahara Dashboard',
+            'totalPendapatan' => $totalPendapatan,
+            'totalReservasi'  => $totalReservasi,
+            'reservasiSelesai'=> $reservasiSelesai,
+            'diskonAktif'     => $diskonAktif,
         ]);
     }
 

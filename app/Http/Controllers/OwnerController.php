@@ -14,20 +14,62 @@ class OwnerController extends Controller
     public function index()
     {
         // Semua waktu:
-        $totalPendapatan = Reservation::where('status_reservasi_wisata', 'selesai')->sum('total_bayar');
+        $totalPendapatan = Reservation::sum('total_bayar');
         $totalReservasi = Reservation::count();
-        $totalPendapatan = Reservation::whereMonth('created_at', now()->month)->sum('total_bayar');
-
-        return view('owner.index', compact('totalPendapatan', 'totalReservasi'));
+        $reservasiSelesai = Reservation::where('status_reservasi_wisata', 'selesai')->count();
+        return view('owner.index', compact('totalPendapatan', 'totalReservasi', 'reservasiSelesai'));
     }
 
-    public function exportPDF()
+    public function dashboard(Request $request)
     {
-        $reservasis = Reservation::with('paket')
+        $tahun = $request->tahun ?? date('Y');
+        $bulan = $request->bulan;
+
+        $tahunList = Reservation::selectRaw('YEAR(tgl_reservasi_wisata) as tahun')
+                        ->distinct()
+                        ->orderBy('tahun', 'desc')
+                        ->pluck('tahun');
+
+        if ($tahunList->isEmpty()) {
+            $tahunList = collect([date('Y')]);
+        }
+
+        $query = Reservation::whereYear('tgl_reservasi_wisata', $tahun);
+
+        if ($bulan) {
+            $query->whereMonth('tgl_reservasi_wisata', $bulan);
+        }
+
+        $totalPendapatan  = (clone $query)->sum('total_bayar');
+        $totalReservasi   = (clone $query)->count();
+        $reservasiSelesai = (clone $query)->where('status_reservasi_wisata', 'selesai')->count();
+
+        return view('owner.index', compact(
+            'totalPendapatan',
+            'totalReservasi',
+            'reservasiSelesai',
+            'tahunList'
+        ));
+    }
+
+    public function exportPDF(Request $request)
+    {
+        $tahun = $request->tahun ?? date('Y');
+        $bulan = $request->bulan;
+
+        $query = Reservation::with('paket')
+            ->whereYear('tgl_reservasi_wisata', $tahun);
+
+        if ($bulan) {
+            $query->whereMonth('tgl_reservasi_wisata', $bulan);
+        }
+
+        $reservasis = $query
             ->orderBy('tgl_reservasi_wisata', 'desc')
             ->get();
 
         $pdf = Pdf::loadView('owner.report_pdf', compact('reservasis'));
+
         return $pdf->download('Laporan_Reservasi_Pemilik.pdf');
     }
     /**

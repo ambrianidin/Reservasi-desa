@@ -15,7 +15,7 @@ class NewsController extends Controller
     public function index()
     {
         $pakets = PaketWisata::all();
-        $beritas = Berita::with('kategori')->latest()->take(3)->get();
+        $beritas = Berita::with('kategori')->latest()->get();
         $obyekwisatas = ObyekWisata::with('kategoriWisata')->latest()->take(6)->get();
 
         return view('news.index', [

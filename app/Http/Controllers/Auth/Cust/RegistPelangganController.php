@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\Auth\Cust;
+use App\Http\Controllers\Controller;
 use App\Models\Pelanggan;
 use App\Models\User;
 use Illuminate\Http\Request;

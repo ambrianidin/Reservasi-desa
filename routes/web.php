@@ -7,17 +7,17 @@ use App\Http\Controllers\DiskonController;
 use App\Http\Controllers\HomestayController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\KategoriWisataController;
-use App\Http\Controllers\LoginAdminController;
-use App\Http\Controllers\LogInController;
-use App\Http\Controllers\LoginPelangganController;
+use App\Http\Controllers\Auth\Admin\LoginAdminController;
+use App\Http\Controllers\Auth\Cust\LoginPelangganController;
+use App\Http\Controllers\Auth\Cust\RegistPelangganController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NewsMController;
 use App\Http\Controllers\ObyekWisataController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\PaketWisataController;
-use App\Http\Controllers\RegistPelangganController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\UserMController;
+use App\Http\Controllers\JenisPembayaranController;
 use App\Models\Pelanggan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +51,9 @@ Route::get('/reservasi/{id}/nota', [\App\Http\Controllers\ReservationController:
 Route::get('/login', function () {
     return redirect('/login-pelanggan');
 })->name('login');
+Route::post('/login', function () {
+    return redirect('/login-pelanggan');
+});
 Route::get('/register-pelanggan', [RegistPelangganController::class, 'index']);
 Route::post('/register-pelanggan', [RegistPelangganController::class, 'register'])->name('register-pelanggan');
 Route::get('/login-pelanggan', [LoginPelangganController::class, 'index']);
@@ -117,18 +120,25 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/diskon/{id}/edit', [DiskonController::class, 'edit'])->name('diskonM.edit')->middleware('karyawan:bendahara');
     Route::put('/diskon/{id}', [DiskonController::class, 'update'])->name('diskonM.update')->middleware('karyawan:bendahara');
     Route::delete('/diskon/{id}', [DiskonController::class, 'destroy'])->name('diskonM.destroy')->middleware('karyawan:bendahara');
-     Route::get('/reservation-confirm', [ConfirmReservController::class, 'index'])->name('confirmreserv')->middleware('karyawan:bendahara');
+    Route::get('/reservation-confirm', [ConfirmReservController::class, 'index'])->name('confirmreserv')->middleware('karyawan:bendahara');
     Route::post('/update-status', [ConfirmReservController::class, 'updateStatus'])->name('updateStatus')->middleware('karyawan:bendahara');
+    Route::get('/jenis-pembayaran', [JenisPembayaranController::class, 'index'])->name('jenisPembayaran')->middleware('karyawan:bendahara');
+    Route::get('/jenis-pembayaran/create', [JenisPembayaranController::class, 'create'])->name('jenisPembayaran.create')->middleware('karyawan:bendahara');
+    Route::post('/jenis-pembayaran', [JenisPembayaranController::class, 'store'])->name('jenisPembayaran.store')->middleware('karyawan:bendahara');
+    Route::get('/jenis-pembayaran/{id}/edit', [JenisPembayaranController::class, 'edit'])->name('jenisPembayaran.edit')->middleware('karyawan:bendahara');
+    Route::put('/jenis-pembayaran/{id}', [JenisPembayaranController::class, 'update'])->name('jenisPembayaran.update')->middleware('karyawan:bendahara');
+    Route::delete('/jenis-pembayaran/{id}', [JenisPembayaranController::class, 'destroy'])->name('jenisPembayaran.destroy')->middleware('karyawan:bendahara');
 
     // Route::get(('/reservasi'), [ReservationController::class, 'index'])->name('reservasi')->middleware('karyawan:bendahara');
     // Route::get('/reservasi/create', [ReservationController::class, 'create'])->name('create')->middleware('karyawan:bendahara');
     // Route::post('/reservasi', [ReservationController::class, 'store'])->name('reservasi.store')->middleware('karyawan:bendahara');
     // Route::get('/reservasi/{id}/edit', [ReservationController::class, 'edit'])->name('reservasi.edit')->middleware('karyawan:bendahara');
     // Route::put('/reservasi/{id}', [ReservationController::class, 'update'])->name('reservasi.update')->middleware('karyawan:bendahara');
-    // Route::delete('/reservasi/{id}', [ReservationController::class, 'destroy'])->name('reservasi.destroy')->middleware('karyawan:bendahara');
+    // Route::delete('/reservasi/{id}', [ReservationController::class, 'destroy'])->name('reservasi.destroy')->middleware('karyawan:bendahara');    
+});
+Route::middleware(['auth', 'karyawan:pemilik'])->group(function () {
 
-    //=========================== pemilik =======================================================//
-    Route::get('/pemilik', [OwnerController::class, 'index'])->name('pemilik')->middleware('karyawan:pemilik');
-    Route::get('/pemilik/laporan-reservasi', [OwnerController::class, 'exportPDF'])->name('pemilik.export.pdf')->middleware('karyawan:pemilik');
-    
+    Route::get('/pemilik', [OwnerController::class, 'dashboard'])->name('pemilik');
+    Route::get('/pemilik/export-pdf', [OwnerController::class, 'exportPDF'])->name('pemilik.export.pdf');
+
 });

@@ -7,7 +7,7 @@
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Desa Penglipuran</title>
+	<title>Desa Banda Neira</title>
 
 	<!-- favicon -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -80,22 +80,35 @@
 											 <!-- Tanda ? : ini adalah ternary operator untuk perbanding benar : salah -->
 											<img src="{{ Auth::user()->pelanggan && Auth::user()->pelanggan->foto 
 														? asset('storage/' . Auth::user()->pelanggan->foto) 
-														: asset('default-user.png') }}" 
+														: asset('default-user.jpeg') }}" 
 												alt="User Photo" 
 												style="width: 30px; height: 30px; border-radius: 50%;">
 												<span class="text-white">
 													 &nbsp;{{ Auth::user()->pelanggan && Auth::user()->pelanggan->nama_lengkap ? Auth::user()->pelanggan->nama_lengkap : 'User' }}
 												</span>
 										</a>
-										<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUser">
-												<form action="{{ route('history-reservasi') }}" method="POST" class="text-left">
-														@csrf
-														<button type="submit" class="dropdown-item"><i class="fas fa-history me-2"></i>History Reservation</button>									
+										<ul class="dropdown-menu dropdown-menu-end shadow border-0 p-2" aria-labelledby="navbarUser" style="border-radius: 12px; min-width: 200px;">
+											<li class="dropdown-header text-uppercase small fw-bold text-muted pb-2">User Account</li>
+
+											<li>
+												<form action="{{ route('history-reservasi') }}" method="POST">
+													@csrf
+													<button type="submit" class="dropdown-item rounded-3 py-2">
+														<i class="fas fa-history me-3 text-primary"></i>History Reservation
+													</button>
 												</form>
-												<form action="{{ route('logoutP') }}" method="POST" class="text-left">
-														@csrf
-														<button type="submit" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</button>									
+											</li>
+
+											<li><hr class="dropdown-divider mx-2"></li>
+
+											<li>
+												<form action="{{ route('logoutP') }}" method="POST">
+													@csrf
+													<button type="submit" class="dropdown-item rounded-3 py-2 text-danger">
+														<i class="fas fa-sign-out-alt me-3"></i>Logout
+													</button>
 												</form>
+											</li>
 										</ul>
 									</li>
 									@endauth
@@ -186,7 +199,7 @@
 						<p>Rencanakan Liburan Anda Sekarang!</p>
 						@if ($title === 'News')<h1>News</h1>@endif
 						@if ($title === 'Contact') <h1>Contact</h1>@endif
-						@if ($title === 'Wisata')<h1>Wisata</h1>@endif
+						@if ($title === 'Wisata')<h1>Obyek Wisata & Penginapan</h1>@endif
 						@if ($title === 'Reservation')<h1>Reservation</h1>@endif
 						@if ($title === 'Voucher')<h1>Voucher</h1>@endif
 						@if ($title === 'History')<h1>History Reservation</h1>@endif
@@ -201,10 +214,11 @@
 	
 	@if ($title === 'Home')
 		@yield('about')
-        @yield('paket-wisata')
 		@yield('obyek')
+		@yield('paket-wisata')
 		@yield('berita')
 		@yield('testimoni')
+		@yield('map')
     @endif
 	@if ($title === 'News')
 		@yield('berita')
@@ -247,11 +261,9 @@
 				<div class="col-lg-6 text-right col-md-12">
 					<div class="social-icons">
 						<ul>
-							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
-							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+							<li><a href="https://x.com/ourdaesea?s=09" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="https://www.instagram.com/ndyin_ak?igsh=MXNxNnBhd201bzF1OA==" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="https://www.linkedin.com/in/dinebriani?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"><i class="fab fa-linkedin"></i></a></li>
 						</ul>
 					</div>
 				</div>

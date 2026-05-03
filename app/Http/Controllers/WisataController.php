@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Homestay;
 use App\Models\ObyekWisata;
 use App\Models\PaketWisata;
 use Illuminate\Http\Request;
@@ -14,9 +15,11 @@ class WisataController extends Controller
     public function index()
     {
         $pakets = ObyekWisata::all();
+        $penginapans = Homestay::all();
         return view('wisata.index', [
         'title' => 'Wisata',
         'pakets' => $pakets,
+        'penginapans' => $penginapans,
         ]);
     }
 

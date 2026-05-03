@@ -23,42 +23,43 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label class="form-label">Title</label>
-                    <input type="text" name="judul" id="judul" class="form-control" value="{{ $berita->judul ?? '' }}" required>
-                    <div class="clearfix"></div>
+                    <input type="text" name="judul" id="judul" class="form-control" value="{{ old('judul', $berita->judul) }}" required>
                 </div>
                 <div class="form-group col-md-6">
                     <label class="form-label">Date</label>
-                    <input type="date" name="tgl_post" id="tgl_post" class="form-control" value="{{ $berita->tgl_post ?? '' }}" required>
+                    <input type="date" name="tgl_post" id="tgl_post" class="form-control" 
+                        value="{{ old('tgl_post', \Carbon\Carbon::parse($berita->tgl_post)->format('Y-m-d')) }}" 
+                        required>
                     <div class="clearfix"></div>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="form-label">News Content</label>
-                <textarea name="berita" id="berita" class="form-control" rows="5" style="resize: vertical; word-wrap: break-word;" required>{{ $berita->berita }}</textarea>
-                <div class="clearfix"></div>
+                <textarea name="berita" id="berita" class="form-control" rows="5" required>{{ old('berita', $berita->berita) }}</textarea>
             </div>
+
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label class="form-label">Category News</label>
                     <select name="id_kategori_berita" id="id_kategori_berita" class="form-control custom-select" required>
                         <option value="">Select Category</option>
                         @foreach (\App\Models\KategoriBerita::all() as $kategori)
-                            <option value="{{ $kategori->id }}">{{ $kategori->kategori_berita }}</option>
+                            <option value="{{ $kategori->id }}" {{ (old('id_kategori_berita', $berita->id_kategori_berita) == $kategori->id) ? 'selected' : '' }}>
+                                {{ $kategori->kategori_berita }}
+                            </option>
                         @endforeach
                     </select>  
                 </div>
-                <div class="form-group mt-4 col-md-2">
-                    <a href="#" class="btn btn-pill btn-info" data-toggle="modal" data-target="#categoryModal">
-                        <i class="feather icon-plus-square"></i>
-                    </a>
-                </div>
                 <div class="form-group col-md-6">
                     <label for="foto" class="form-label">Pict News</label>
-                    <input class="form-control" type="file" name="foto" id="foto" accept="image/*"required value="{{ $berita->foto }}">
-                    <div class="clearfix"></div>
+                    <input class="form-control" type="file" name="foto" id="foto" accept="image/*">
+                    @if($berita->foto)
+                        <p class="mt-1">File saat ini: <a href="{{ asset('storage/' . $berita->foto) }}" target="_blank">{{ $berita->foto }}</a></p>
+                    @endif
                 </div>
             </div>
-            <button type="submit" class="btn btn-secondary">Create News</button>
+            <button type="submit" class="btn btn-primary">Update News</button>
             <a href="{{ route('newsM') }}" class="btn btn-danger">Cancel</a>
         </form>
     </div>

@@ -48,10 +48,12 @@
                     <select name="id_kategori_wisata" id="id_kategori_wisata" class="form-control custom-select" required>
                         <option value="">Select Category</option>
                         @foreach (\App\Models\KategoriWisata::all() as $kategoriW)
-                            <option value="{{ $kategoriW->id }}" >
-                                {{ $kategoriW->kategori_wisata }}
-                            </option>
+                            <option value="{{ $kategoriW->id }}" 
+    {{ old('id_kategori_wisata', $obyeks->id_kategori_wisata) == $kategoriW->id ? 'selected' : '' }}>
+    {{ $kategoriW->kategori_wisata }}
+</option>
                         @endforeach
+                        
                     </select>
                 </div>
                 <div class="form-group mt-4 col-md-2">
@@ -61,14 +63,30 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="foto1" class="form-label">Pict 1</label>
-                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*" value="{{ $obyeks->foto1 ?? '' }}" required>
+                    <input class="form-control" type="file" name="foto1" id="foto1" accept="image/*">
+                    @if($obyeks->foto1)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $obyeks->foto1) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto2" class="form-label">Pict 2</label>
-                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" value="{{ $obyeks->foto2 ?? '' }}" required>
+                    <input class="form-control" type="file" name="foto2" id="foto2" accept="image/*" >
+                    @if($obyeks->foto2)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $obyeks->foto2) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     @error('foto2')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -76,7 +94,15 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="foto3" class="form-label">Pict 3</label>
-                    <input class="form-control" type="file" name="foto3" id="foto3" accept="image/*" value="{{ $obyeks->foto3 ?? '' }}" required>
+                    <input class="form-control" type="file" name="foto3" id="foto3" accept="image/*" >
+                    @if($obyeks->foto3)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $obyeks->foto3) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     @error('foto3')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -86,7 +112,15 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="foto4" class="form-label">Pict 4</label>
-                    <input class="form-control" type="file" name="foto4" id="foto4" accept="image/*" value="{{ $obyeks->foto4 ?? '' }}">
+                    <input class="form-control" type="file" name="foto4" id="foto4" accept="image/*">
+                    @if($obyeks->foto4)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $obyeks->foto4) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     @error('foto4')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -94,7 +128,15 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="foto5" class="form-label">Pict 5</label>
-                    <input class="form-control" type="file" name="foto5" id="foto5" accept="image/*" value="{{ $obyeks->foto5 ?? '' }}">
+                    <input class="form-control" type="file" name="foto5" id="foto5" accept="image/*">
+                    @if($obyeks->foto5)
+    <p class="mt-1">
+        File saat ini: 
+        <a href="{{ asset('storage/' . $obyeks->foto5) }}" target="_blank">
+            Lihat Foto
+        </a>
+    </p>
+@endif
                     <div class="clearfix"></div>
                 </div>
             </div>

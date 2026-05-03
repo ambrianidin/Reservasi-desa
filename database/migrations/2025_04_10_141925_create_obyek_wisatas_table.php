@@ -18,10 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kategori_wisata');
             $table->text('fasilitas');
             $table->text('foto1');
-            $table->text('foto2');
-            $table->text('foto3');
-            $table->text('foto4');
-            $table->text('foto5');
+            $table->text('foto2')->nullable();
+            $table->text('foto3')->nullable();
+            $table->text('foto4')->nullable();
+            $table->text('foto5')->nullable();
             $table->timestamps();
             $table->foreign('id_kategori_wisata')->references('id')->on('kategori_wisatas')->onUpdate('cascade')->onDelete('cascade');
         });

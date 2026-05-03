@@ -90,8 +90,8 @@ class HomestayController extends Controller
             'nama_penginapan' => 'required|string|max:255|unique:penginapans,nama_penginapan,' . $id,
             'deskripsi' => 'required|string',
             'fasilitas' => 'required|string',
-            'foto1' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-            'foto2' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            'foto1' => 'image|mimes:jpeg,png,jpg|max:10000',
+            'foto2' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto3' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto4' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto5' => 'image|mimes:jpeg,png,jpg|max:10000',
@@ -100,12 +100,16 @@ class HomestayController extends Controller
         $penginapans = Homestay::findOrFail($id);
 
         $fotoPaths = [];
-            for ($i = 1; $i <= 5; $i++) {
-                $fotoKey = "foto{$i}";
-                $fotoPaths[$fotoKey] = $request->hasFile($fotoKey)
-                    ? $request->file($fotoKey)->store('homestay', 'public')
-                    : null;
-            }
+
+for ($i = 1; $i <= 5; $i++) {
+    $fotoKey = "foto{$i}";
+
+    if ($request->hasFile($fotoKey)) {
+        $fotoPaths[$fotoKey] = $request->file($fotoKey)->store('homestay', 'public');
+    } else {
+        $fotoPaths[$fotoKey] = $penginapans->$fotoKey;
+    }
+}
 
         $penginapans->update([
             'nama_penginapan' => $request->nama_penginapan,

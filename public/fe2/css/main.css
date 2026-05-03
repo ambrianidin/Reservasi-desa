@@ -165,6 +165,297 @@ p:last-child {
 # All Common Styles
 
 ----------------------------------------------------------------------------- */
+/* ===== Latest News Section ===== */
+.news-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #B85C1A;
+    margin-bottom: 8px;
+}
+
+.news-main-title {
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0 0 6px;
+}
+
+.news-main-sub {
+    font-size: 14px;
+    color: #888;
+    margin: 0;
+}
+
+/* Card */
+.news-card-wrap {
+    background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 14px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.news-card-wrap:hover {
+    border-color: rgba(0,0,0,0.22);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.news-thumb-link {
+    display: block;
+}
+
+.news-thumb {
+    width: 100%;
+    height: 195px;
+    object-fit: cover;
+    display: block;
+}
+
+.news-thumb-placeholder {
+    width: 100%;
+    height: 195px;
+    background: #FAECE7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    color: #D4622A;
+    opacity: 0.35;
+}
+
+/* Card body */
+.news-card-body {
+    padding: 16px 18px 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.news-category-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #FAECE7;
+    color: #993C1D;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.news-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.news-card-title a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.news-card-title a:hover {
+    color: #D4622A;
+}
+
+.news-card-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: #888;
+}
+
+.news-card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.news-divider {
+    border: none;
+    border-top: 0.5px solid rgba(0,0,0,0.1);
+    margin: 4px 0;
+}
+
+.news-card-excerpt {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.65;
+    margin: 0;
+    flex: 1;
+}
+
+/* More button */
+.news-more-btn {
+    border: 1.5px solid #D4622A !important;
+    color: #D4622A !important;
+    border-radius: 8px;
+    padding: 11px 36px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s, color 0.15s;
+}
+
+.news-more-btn:hover {
+    background: #D4622A !important;
+    color: #fff !important;
+}
+/* ===== Banda Islands Section ===== */
+.eyebrow-text {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #B85C1A;
+  margin-bottom: 8px;
+}
+
+.section-title-main {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 14px;
+  color: #888;
+  letter-spacing: 0.04em;
+}
+
+.orange-text { color: #D4622A; }
+
+/* Card */
+.pkg-card {
+  background: #fff;
+  border: 0.5px solid rgba(0,0,0,0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pkg-card:hover {
+  border-color: rgba(0,0,0,0.25);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+}
+
+.pkg-thumb {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.pkg-thumb-placeholder {
+  width: 100%;
+  height: 200px;
+  background: #FAECE7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #D4622A;
+  opacity: 0.4;
+}
+
+.pkg-body {
+  padding: 16px 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pkg-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pkg-badge {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: #FAECE7;
+  color: #993C1D;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.pkg-price {
+  font-size: 15px;
+  font-weight: 600;
+  color: #D4622A;
+}
+
+.pkg-name {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.pkg-desc {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.pkg-divider {
+  border: none;
+  border-top: 0.5px solid rgba(0,0,0,0.1);
+  margin: 4px 0;
+}
+
+.pkg-facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.facility-tag {
+  font-size: 11px;
+  color: #555;
+  background: #f5f5f5;
+  border: 0.5px solid #ddd;
+  border-radius: 6px;
+  padding: 3px 8px;
+}
+
+.pkg-footer {
+  padding: 0 18px 16px;
+}
+
+.pkg-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: #D4622A;
+  color: #fff !important;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 10px 0;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.pkg-btn:hover {
+  background: #B85C1A;
+  color: #fff !important;
+}
+
 .loader {
   bottom: 0;
   height: 100%;
@@ -503,7 +794,7 @@ a.boxed-btn, a.bordered-btn, a.cart-btn {
   z-index: 1;
   background-attachment: fixed;
   padding-top: 200px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 
 .breadcrumb-section:after {
@@ -3143,4 +3434,136 @@ body {
         .modal-title {
             font-weight: 600;
         }
-        
+        .hr-dashed {
+          border: none;
+          border-top: 1px dashed #696767; /* abu-abu terang */
+        }
+    .itinerary-card {
+        transition: all 0.3s ease;
+    }
+
+    .itinerary-card:hover {
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+        transform: translateY(-4px);
+    }
+
+    .itinerary-content {
+        display: none;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border-top: 1px dashed #ccc;
+        margin-top: 20px;
+    }
+
+    .itinerary-content.active {
+        display: block;
+    }
+
+    .itinerary-content h5 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .itinerary-content h6 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+
+    .timeline {
+        position: relative;
+        padding: 0 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .timeline-item {
+        position: relative;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: left;
+    }
+
+    .timeline-circle {
+        width: 12px;
+        height: 12px;
+        background-color: transparent;
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        position: absolute;
+        left: 0;
+        z-index: 1;
+    }
+
+    .timeline-line {
+        width: 1px;
+        background-color: #ccc;
+        position: absolute;
+        left: 5px;
+        top: 11px;
+        bottom: -20px;
+        z-index: 0;
+    }
+
+    .timeline-content {
+        padding-left: 30px;
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .package-dropdown {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .package-dropdown:focus {
+        border-color: #F28123;
+        outline: none;
+    }
+
+    .package-details {
+        display: none;
+        padding-top: 15px;
+        border-top: 1px solid #ddd;
+    }
+
+    .package-details.active {
+        display: block;
+    }
+
+    .package-details p {
+        margin: 5px 0;
+        font-size: 0.95rem;
+    }
+
+    .package-details .price {
+        font-weight: 700;
+        color: #F28123;
+        font-size: 1.15rem;
+    }
+
+    @media (max-width: 767.96px) {
+        .itinerary-card {
+            margin: 0;
+        }
+        .timeline {
+            padding: 0 15px;
+        }
+        .timeline-circle {
+            left: 0;
+        }
+        .timeline-line {
+            left: 5px;
+        }
+        .timeline-content {
+            padding-left: 25px;
+        }
+    }

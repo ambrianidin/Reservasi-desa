@@ -1,6 +1,5 @@
 <!-- advertisement section -->
 <div class="product-section section properties mt-150 mb-96">
- 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 offset-lg-2 text-center">
 				<div class="section-title">	

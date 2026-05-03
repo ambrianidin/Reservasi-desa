@@ -5,12 +5,12 @@
 
     {{-- Topbar --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0" style="font-weight:500">News Management</h5>
-        <a href="{{ route('newsM.create') }}"
+        <h5 class="mb-0" style="font-weight:500">Jenis Pembayaran</h5>
+        <a href="{{ route('jenisPembayaran.create') }}"
            class="btn btn-sm d-inline-flex align-items-center gap-2"
            style="background:#1D9E75;color:#fff;border-radius:8px;font-size:13px;font-weight:500;padding:8px 16px;border:none">
             <i class="feather icon-plus" style="font-size:14px"></i>
-            Tambah Berita
+            Tambah Jenis Pembayaran
         </a>
     </div>
 
@@ -21,16 +21,15 @@
                 <thead style="background:#f8f9fa">
                     <tr style="border-bottom:0.5px solid rgba(0,0,0,0.08)">
                         <th class="text-center text-muted" style="font-size:11px;font-weight:500;padding:12px 14px;width:40px">No</th>
-                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Judul</th>
-                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Berita</th>
-                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Tanggal</th>
-                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Foto</th>
-                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Kategori</th>
+                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Nama Rekening</th>
+                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Nomor Rekening</th>
+                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Atas Nama</th>
+                        <th class="text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Status</th>
                         <th class="text-center text-muted" style="font-size:11px;font-weight:500;padding:12px 14px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($beritas as $index => $berita)
+                    @forelse($data as $index => $item)
                     <tr style="border-bottom:0.5px solid rgba(0,0,0,0.06)">
 
                         {{-- No --}}
@@ -38,53 +37,45 @@
                             {{ $index + 1 }}
                         </td>
 
-                        {{-- Judul --}}
+                        {{-- Nama Rekening --}}
                         <td style="padding:12px 14px;vertical-align:middle;font-weight:500;color:#1a1a1a">
-                            {{ Str::limit($berita->judul, 20) }}
+                            {{ $item->nama_rekening ?? '-' }}
                         </td>
 
-                        {{-- Berita --}}
-                        <td style="padding:12px 14px;vertical-align:middle;max-width:200px">
-                            <span class="text-muted d-block text-truncate"
-                                  title="{{ $berita->berita }}"
-                                  style="max-width:190px">
-                                {{ Str::limit($berita->berita, 50) }}
-                            </span>
-                        </td>
-
-                        {{-- Tanggal --}}
-                        <td style="padding:12px 14px;vertical-align:middle;white-space:nowrap" class="text-muted">
-                            {{ $berita->tgl_post ? \Carbon\Carbon::parse($berita->tgl_post)->format('d F, Y') : '-' }}
-                        </td>
-
-                        {{-- Foto --}}
-                        <td style="padding:12px 14px;vertical-align:middle">
-                            @if($berita->foto)
-                                <img src="{{ asset('storage/' . $berita->foto) }}"
-                                     alt="Foto Berita"
-                                     style="width:56px;height:44px;object-fit:cover;border-radius:6px;border:0.5px solid rgba(0,0,0,0.08)">
-                            @else
-                                <div style="width:56px;height:44px;border-radius:6px;background:#f5f5f5;border:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center">
-                                    <i class="feather icon-image" style="font-size:14px;color:#bbb"></i>
-                                </div>
-                            @endif
-                        </td>
-
-                        {{-- Kategori --}}
+                        {{-- Nomor Rekening --}}
                         <td style="padding:12px 14px;vertical-align:middle">
                             <span style="background:#E6F1FB;color:#0C447C;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500">
-                                {{ $berita->kategori->kategori_berita }}
+                                {{ $item->nomor_rekening ?? '-' }}
                             </span>
+                        </td>
+
+                        {{-- Atas Nama --}}
+                        <td class="text-muted" style="padding:12px 14px;vertical-align:middle">
+                            {{ $item->atas_nama ?? '-' }}
+                        </td>
+
+                        {{-- Status Aktif --}}
+                        <td style="padding:12px 14px;vertical-align:middle">
+                            @if($item->aktif == 1)
+                                <span style="background:#EAF3DE;color:#27500A;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500">
+                                    Aktif
+                                </span>
+                            @else
+                                <span style="background:#F5F5F5;color:#777;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500">
+                                    Tidak Aktif
+                                </span>
+                            @endif
                         </td>
 
                         {{-- Aksi --}}
                         <td class="text-center" style="padding:12px 14px;vertical-align:middle">
                             <div class="d-flex justify-content-center gap-2">
-                                <a href="{{ route('newsM.edit', $berita->id) }}"
+                                <a href="{{ route('jenisPembayaran.edit', $item->id) }}"
                                    style="width:32px;height:32px;background:#FAEEDA;border-radius:6px;display:inline-flex;align-items:center;justify-content:center">
                                     <i class="feather icon-edit-2" style="font-size:13px;color:#854F0B"></i>
                                 </a>
-                                <form action="{{ route('newsM.destroy', $berita->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('jenisPembayaran.destroy', $item->id) }}" method="POST" class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus data ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
@@ -96,7 +87,13 @@
                         </td>
 
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="6" class="text-center text-muted py-4" style="font-size:13px">
+                            Belum ada data jenis pembayaran
+                        </td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

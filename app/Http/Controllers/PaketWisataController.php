@@ -35,7 +35,7 @@ class PaketWisataController extends Controller
             'fasilitas' => 'required|string',
             'harga_per_pack' => 'required|numeric',
             'foto1' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-            'foto2' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            'foto2' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto3' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto4' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto5' => 'image|mimes:jpeg,png,jpg|max:10000',
@@ -93,23 +93,29 @@ class PaketWisataController extends Controller
             'nama_paket' => 'required|string|max:255',
             'deskripsi' => 'required|string',
             'fasilitas' => 'required|string',
-            'harga_per_pack' => 'required|numeric',
+            'harga_per_pack' => 'required|numeric|min:0|max:1000000000',
             'foto1' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto2' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto3' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto4' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto5' => 'image|mimes:jpeg,png,jpg|max:10000',
+        ], [
+            'harga_per_pack.max' => 'Harga per pack must not exceed 1,000,000,000.',
         ]);
 
         $paketwisata = PaketWisata::findOrFail($id);
 
         $fotoPaths = [];
-        for ($i = 1; $i <= 5; $i++) {
-            $fotoKey = "foto{$i}";
-            $fotoPaths[$fotoKey] = $request->hasFile($fotoKey)
-                ? $request->file($fotoKey)->store('paket', 'public')
-                : null;
-        }
+
+for ($i = 1; $i <= 5; $i++) {
+    $fotoKey = "foto{$i}";
+
+    if ($request->hasFile($fotoKey)) {
+        $fotoPaths[$fotoKey] = $request->file($fotoKey)->store('paket', 'public');
+    } else {
+        $fotoPaths[$fotoKey] = $paketwisata->$fotoKey;
+    }
+}
 
         $paketwisata->update([
             'nama_paket' => $request->nama_paket,

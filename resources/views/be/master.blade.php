@@ -33,7 +33,23 @@
     <!-- Libs -->
     <link rel="stylesheet" href="{{asset ('be/libs/perfect-scrollbar/perfect-scrollbar.css') }}">
     <link rel="stylesheet" href="{{asset ('be/libs/flot/flot.css') }}">
+    <style>
+    .sidenav-item.active > .sidenav-link {
+        background-color: rgba(0,0,0,.03); 
+        color: #26b4ff;
+        font-weight: 500;
+    }
 
+    .sidenav-item.active > .sidenav-link i {
+        color: #26b4ff;
+    }
+
+    .sidenav-link:hover {
+        background-color: rgba(0,0,0,.02);
+        text-decoration: none;
+    }
+</style>
+<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body>
@@ -61,6 +77,7 @@
                     @php
                         $user = Auth::user();
                         $role = $user->level ?? ($user->karyawan->jabatan ?? 'unknown');
+                        $jumlahReservasiBaru = \App\Models\Reservation::where('status_reservasi_wisata','confirm')->count();
                     @endphp
 
                 @if($role === 'admin')
@@ -69,7 +86,7 @@
                 <!-- Links -->
                 <ul class="sidenav-inner py-1">
                     <!-- Dashboards -->
-                    <li class="sidenav-item {{ Request::is('admin') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('admin') ? 'active' : '' }}">
                         <a href="{{ route('admin') }}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
@@ -77,13 +94,13 @@
                     </li>
                     <li class="sidenav-divider mb-1"></li>
                     <div class="sidenav-header small font-weight-semibold">Management</div>
-                    <li class="sidenav-item {{ Request::is('userM') || Request::is('userM/create') || Request::is('userM/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('userM') || Request::is('userM/create') || Request::is('userM/*') ? 'active' : '' }}">
                         <a href="{{route('userM')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-users"></i>
                             <div>User Management</div>
                         </a>
                     </li>
-                    <li class="sidenav-item {{ Request::is('newsM') || Request::is('newsM/create') || Request::is('newsM/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('newsM') || Request::is('newsM/create') || Request::is('newsM/*') ? 'active' : '' }}">
                         <a href="{{route('newsM')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-file-text"></i>
                             <div>News Management</div>
@@ -91,19 +108,19 @@
                     </li>
                     <li class="sidenav-divider mb-1"></li>
                     <div class="sidenav-header small font-weight-semibold">Services</div>
-                    <li class="sidenav-item {{ Request::is('obyek-wisata') || Request::is('obyek-wisata/create') || Request::is('obyek-wisata/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('obyek-wisata') || Request::is('obyek-wisata/create') || Request::is('obyek-wisata/*') ? 'active' : '' }}">
                         <a href="{{route('obyek-wisata')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-grid"></i>
                             <div>Obyek Wisata</div>
                         </a>
                     </li>
-                    <li class="sidenav-item {{ Request::is('paketwisata') || Request::is('paketwisata/create') || Request::is('paketwisata/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('paketwisata') || Request::is('paketwisata/create') || Request::is('paketwisata/*') ? 'active' : '' }}">
                         <a href="{{route('paketWisata')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-map"></i>
                             <div>Paket Wisata</div>
                         </a>
                     </li>
-                    <li class="sidenav-item {{ Request::is('homestay') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('homestay') ? 'active' : '' }}">
                         <a href="{{route('homestay')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-briefcase"></i>
                             <div>Homestay</div>
@@ -117,7 +134,7 @@
                 <!-- Links -->
                 <ul class="sidenav-inner py-1">
                     <!-- Dashboards -->
-                    <li class="sidenav-item {{ Request::is('pemilik') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('pemilik') ? 'active' : '' }}">
                         <a href="#" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
@@ -133,23 +150,35 @@
                 <!-- Links -->
                 <ul class="sidenav-inner py-1">
                     <!-- Dashboards -->
-                    <li class="sidenav-item {{ Request::is('bendahara') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('bendahara') ? 'active' : '' }}">
                         <a href="bendahara" class="sidenav-link">
                             <i class="sidenav-icon feather icon-home"></i>
                             <div>Dashboards</div>
                         </a>
                     </li>
                     <li class="sidenav-divider mb-1"></li>
-                    <li class="sidenav-item {{ Request::is('diskon') || Request::is('diskon/create') || Request::is('diskon/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('diskon') || Request::is('diskon/create') || Request::is('diskon/*') ? 'active' : '' }}">
                         <a href="{{route('diskonM')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-award"></i>
                             <div>Diskon</div>
                         </a>
                     </li>
-                    <li class="sidenav-item {{ Request::is('reservation-confirm') || Request::is('reservation-confirm/*') ? 'active-sidebar' : '' }}">
+                    <li class="sidenav-item {{ Request::is('reservation-confirm') || Request::is('reservation-confirm/*') ? 'active' : '' }}">
                         <a href="{{route('confirmreserv')}}" class="sidenav-link">
                             <i class="sidenav-icon feather icon-folder"></i>
-                            <div>Reservation</div>
+                            <div>Reservation 
+                                @if($jumlahReservasiBaru > 0)
+                                    <span class="badge badge-danger ml-2">
+                                        {{ $jumlahReservasiBaru }}
+                                    </span>
+                                @endif
+                            </div>
+                        </a>
+                    </li>
+                    <li class="sidenav-item {{ Request::is('jenis-pembayaran') || Request::is('jenis-pembayaran/*') ? 'active' : '' }}">
+                        <a href="{{route('jenisPembayaran')}}" class="sidenav-link">
+                            <i class="sidenav-icon feather icon-credit-card"></i>
+                            <div>Jenis Pembayaran</div>
                         </a>
                     </li>
                 </ul>
@@ -183,124 +212,6 @@
 
 
                         <div class="navbar-nav align-items-lg-center ml-auto">
-                            <div class="demo-navbar-notifications nav-item dropdown mr-lg-3">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
-                                    <i class="feather icon-bell navbar-icon align-middle"></i>
-                                    <span class="badge badge-danger badge-dot indicator"></span>
-                                    <span class="d-lg-none align-middle">&nbsp; Notifications</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="bg-primary text-center text-white font-weight-bold p-3">
-                                        4 New Notifications
-                                    </div>
-                                    <div class="list-group list-group-flush">
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-home bg-secondary border-0 text-white"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">Login from 192.168.1.1</div>
-                                                <div class="text-light small mt-1">
-                                                    Aliquam ex eros, imperdiet vulputate hendrerit et.
-                                                </div>
-                                                <div class="text-light small mt-1">12h ago</div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-user-plus bg-info border-0 text-white"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">You have
-                                                    <strong>4</strong> new followers</div>
-                                                <div class="text-light small mt-1">
-                                                    Phasellus nunc nisl, posuere cursus pretium nec, dictum vehicula tellus.
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-power bg-danger border-0 text-white"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">Server restarted</div>
-                                                <div class="text-light small mt-1">
-                                                    19h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <div class="ui-icon ui-icon-sm feather icon-alert-triangle bg-warning border-0 text-dark"></div>
-                                            <div class="media-body line-height-condenced ml-3">
-                                                <div class="text-dark">99% server load</div>
-                                                <div class="text-light small mt-1">
-                                                    Etiam nec fringilla magna. Donec mi metus.
-                                                </div>
-                                                <div class="text-light small mt-1">
-                                                    20h ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <a href="javascript:" class="d-block text-center text-light small p-2 my-1">Show all notifications</a>
-                                </div>
-                            </div>
-
-                            <div class="demo-navbar-messages nav-item dropdown mr-lg-3">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="#" data-toggle="dropdown">
-                                    <i class="feather icon-mail navbar-icon align-middle"></i>
-                                    <span class="badge badge-success badge-dot indicator"></span>
-                                    <span class="d-lg-none align-middle">&nbsp; Messages</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="bg-primary text-center text-white font-weight-bold p-3">
-                                        4 New Messages
-                                    </div>
-                                    <div class="list-group list-group-flush">
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="{{asset ('be/img/avatars/6-small.png') }}" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor consectetuer elit.</div>
-                                                <div class="text-light small mt-1">
-                                                    Josephin Doe &nbsp;·&nbsp; 58m ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="{{asset ('be/img/avatars/4-small.png') }}" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet, consectetuer.</div>
-                                                <div class="text-light small mt-1">
-                                                    Lary Doe &nbsp;·&nbsp; 1h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="{{asset ('be/img/avatars/5-small.png') }}" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet elit.</div>
-                                                <div class="text-light small mt-1">
-                                                    Alice &nbsp;·&nbsp; 2h ago
-                                                </div>
-                                            </div>
-                                        </a>
-
-                                        <a href="javascript:" class="list-group-item list-group-item-action media d-flex align-items-center">
-                                            <img src="{{asset ('be/img/avatars/11-small.png') }}" class="d-block ui-w-40 rounded-circle" alt>
-                                            <div class="media-body ml-3">
-                                                <div class="text-dark line-height-condenced">Lorem ipsum dolor sit amet consectetuer amet elit dolor sit.</div>
-                                                <div class="text-light small mt-1">
-                                                    Suzen &nbsp;·&nbsp; 5h ago
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-
-                                    <a href="javascript:" class="d-block text-center text-light small p-2 my-1">Show all messages</a>
-                                </div>
-                            </div>
-
-                            <!-- Divider -->
-                            <div class="nav-item d-none d-lg-block text-big font-weight-light line-height-1 opacity-25 mr-3 ml-1">|</div>
                             <div class="demo-navbar-user nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                                     <span class="d-inline-flex flex-lg-row-reverse align-items-center align-middle">
@@ -332,7 +243,6 @@
         <div class="layout-overlay layout-sidenav-toggle"></div>
     </div>
     <!-- [ Layout wrapper] End -->
-
     <!-- Core scripts -->
     <script src="{{asset ('be/js/pace.js') }}"></script>
     <script src="{{asset ('be/js/jquery-3.3.1.min.js') }}"></script>
@@ -341,7 +251,7 @@
     <script src="{{asset ('be/js/sidenav.js') }}"></script>
     <script src="{{asset ('be/js/layout-helpers.js') }}"></script>
     <script src="{{asset ('be/js/material-ripple.js') }}"></script>
-
+    @stack('scripts')
     <!-- Libs -->
     <script src="{{asset ('be/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{asset ('be/libs/eve/eve.js') }}"></script>

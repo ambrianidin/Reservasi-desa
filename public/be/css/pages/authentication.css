@@ -9,6 +9,10 @@
 }
 .authentication-wrapper .authentication-inner {
   width: 100%;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem 2rem 2rem;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.08);
 }
 .authentication-wrapper.authentication-1, .authentication-wrapper.authentication-2, .authentication-wrapper.authentication-4 {
   -webkit-box-align: center;
@@ -17,9 +21,10 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+            background-color: #f0f2f5;
 }
 .authentication-wrapper.authentication-1 .authentication-inner {
-  max-width: 300px;
+  max-width: 500px;
 }
 .authentication-wrapper.authentication-2 .authentication-inner {
   max-width: 380px;

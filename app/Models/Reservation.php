@@ -9,6 +9,7 @@ class Reservation extends Model
     protected $table = 'reservasis';
     protected $fillable = [
         'id_pelanggan',
+        'id_jenis_pembayaran',
         'id_paket',
         'id_diskon',
         'email',
@@ -28,6 +29,16 @@ class Reservation extends Model
     public function pelanggan()
     {
         return $this->belongsTo(Pelanggan::class, 'id_pelanggan');
+    }
+
+    public function diskon()
+    {
+        return $this->belongsTo(Diskon::class, 'id_diskon');
+    }
+
+    public function jenisPembayaran()
+    {
+        return $this->belongsTo(JenisPembayaran::class, 'id_jenis_pembayaran');
     }
 
 }

@@ -6,6 +6,7 @@ use App\Models\Diskon;
 use App\Models\PaketWisata;
 use App\Models\Pelanggan;
 use App\Models\Reservation;
+use App\Models\JenisPembayaran;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -30,13 +31,14 @@ class ReservationController extends Controller
             return redirect()->route('login-pelanggan');
         }
         
+        $jenisPembayarans = JenisPembayaran::all();
         $user = Auth::user();
         $pelanggan = Pelanggan::where('id_user', $user->id)->first();
 
         $paket = PaketWisata::findOrFail($id_paket);
         $diskons = Diskon::where('status', 'aktif')->get();
 
-        return view('reservation.index', ['title' => 'Reservation'], compact('paket', 'diskons'));
+        return view('reservation.index', ['title' => 'Reservation'], compact('paket', 'diskons', 'jenisPembayarans', 'pelanggan'));
     }
 
     /**
@@ -55,6 +57,8 @@ class ReservationController extends Controller
             'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',            
             'jumlah_peserta' => 'required|integer|min:1',
             'id_paket' => 'required',
+            'id_diskon' => 'nullable|exists:diskons,id',
+            'id_jenis_pembayaran' => 'required|exists:jenis_pembayarans,id',
             'harga' => 'required|numeric',
             'total_bayar' => 'required|numeric',
             'file_bukti_tf' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
@@ -62,13 +66,13 @@ class ReservationController extends Controller
         
         $tanggalGabungan = $request->tanggal_mulai . ' s.d ' . $request->tanggal_selesai;
 
-        $totalPeserta = Reservation::whereDate('tgl_reservasi_wisata', $request->tgl_reservasi_wisata)->sum('jumlah_peserta');
+        $totalPeserta = Reservation::where('tgl_reservasi_wisata', 'like', '%' . $request->tanggal_mulai . '%')
+    ->sum('jumlah_peserta');
 
         $sisaKuota = 50 - $totalPeserta;
 
         if ($request->jumlah_peserta > $sisaKuota) {
-            return back()->withErrors([
-                'jumlah_peserta' => "Kuota tersisa: $sisaKuota orang"])->withInput();
+            return back()->with('error', "Kuota tersisa: $sisaKuota orang")->withInput();
         }
 
         $fileName = null;
@@ -81,6 +85,7 @@ class ReservationController extends Controller
         Reservation::create([
             'id_pelanggan' => $pelanggan->id,
             'id_paket' => $request->id_paket,
+            'id_jenis_pembayaran' => $request->id_jenis_pembayaran,
             'id_diskon' => $request->id_diskon,
             'email' => $user->email,
             'nama' => $pelanggan->nama_lengkap,
@@ -89,7 +94,7 @@ class ReservationController extends Controller
             'jumlah_peserta' => $request->jumlah_peserta,
             'total_bayar' => $request->total_bayar,
             'file_bukti_tf' => $fileName,
-            'status_reservasi_wisata' => 'pesan',
+            'status_reservasi_wisata' => 'confirm',
         ]);
 
         return redirect()->route('history-reservasi', $user->id)->with('success', 'Reservasi berhasil!');

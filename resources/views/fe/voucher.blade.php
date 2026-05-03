@@ -14,7 +14,7 @@
                     <p>Diskon: {{ $diskon->persentase_diskon }}%</p>
                     <p class="voucher-date">Berlaku Hingga: {{ \Carbon\Carbon::parse($diskon->tanggal_berakhir)->format('d M') }} S&K</p>
                 </div>
-                <span class="badge badge-quantity">x10</span>
+                <span class="badge badge-quantity">New</span>
             </div>
         </div>
     @empty

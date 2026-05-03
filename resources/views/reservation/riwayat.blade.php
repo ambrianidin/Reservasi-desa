@@ -27,12 +27,14 @@
                         @php
                             $status = $reservasi->status_reservasi_wisata;
                             $labelClass = match($status) {
+                                'confirm' => 'secondary',
                                 'pesan' => 'warning',
                                 'dibayar', 'selesai' => 'success',
                                 'batal' => 'danger',
                                 default => 'secondary',
                             };
                             $labelText = match($status) {
+                                'confirm' => 'Menunggu Konfirmasi',
                                 'pesan' => 'Pesan',
                                 'dibayar' => 'Disetujui',
                                 'selesai' => 'Selesai',

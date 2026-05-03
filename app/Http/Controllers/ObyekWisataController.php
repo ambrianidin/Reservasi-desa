@@ -35,7 +35,7 @@ class ObyekWisataController extends Controller
             'id_kategori_wisata' => 'required|exists:kategori_wisatas,id',
             'fasilitas' => 'required|string',
             'foto1' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-            'foto2' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            'foto2' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto3' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto4' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto5' => 'image|mimes:jpeg,png,jpg|max:10000',
@@ -89,12 +89,12 @@ class ObyekWisataController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nama_wisata' => 'required|string|max:255|unique:obyek_wisatas,nama_wisata' . $id,
+            'nama_wisata' => 'required|string|max:255|unique:obyek_wisatas,nama_wisata,' . $id,
             'deskripsi_wisata' => 'required|string',
             'id_kategori_wisata' => 'required|exists:kategori_wisatas,id',
             'fasilitas' => 'required|string',
-            'foto1' => 'required|image|mimes:jpeg,png,jpg|max:10000',
-            'foto2' => 'required|image|mimes:jpeg,png,jpg|max:10000',
+            'foto1' => 'image|mimes:jpeg,png,jpg|max:10000',
+            'foto2' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto3' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto4' => 'image|mimes:jpeg,png,jpg|max:10000',
             'foto5' => 'image|mimes:jpeg,png,jpg|max:10000',
@@ -103,12 +103,16 @@ class ObyekWisataController extends Controller
         $obyeks = ObyekWisata::findOrFail($id);
 
         $fotoPaths = [];
-            for ($i = 1; $i <= 5; $i++) {
-                $fotoKey = "foto{$i}";
-                $fotoPaths[$fotoKey] = $request->hasFile($fotoKey)
-                    ? $request->file($fotoKey)->store('obyek_wisata', 'public')
-                    : null;
-            }
+
+for ($i = 1; $i <= 5; $i++) {
+    $fotoKey = "foto{$i}";
+
+    if ($request->hasFile($fotoKey)) {
+        $fotoPaths[$fotoKey] = $request->file($fotoKey)->store('obyek_wisata', 'public');
+    } else {
+        $fotoPaths[$fotoKey] = $obyeks->$fotoKey;
+    }
+}
 
         $obyeks->update([
             'nama_wisata' => $request->nama_wisata,
