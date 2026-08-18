@@ -4,12 +4,6 @@ Tourism Management System
 ## Overview
 Desa Wisata LSP is a comprehensive Laravel 11 application that provides an integrated management system for tourist destinations. Built with clean architecture principles, it features tour package reservations, homestay management, news, discounts, and payments, optimized for performance and user experience.
 
-## Quick Links
-- **Production**: https://desawisata.example.com
-- **Staging**: https://stg.desawisata.example.com
-- **Technical Documentation**: [TECHNICAL_DOCUMENTATION.md](#)
-- **API Documentation**: [docs/API.md](#)
-
 ## Table of Contents
 - [Features](#features)
 - [Getting Started](#getting-started)
