@@ -1,401 +1,242 @@
-# Desa Wisata LSP - Tourism Management System
+# Desa Wisata LSP
+Tourism Management System
 
-Sistem manajemen terpadu untuk destinasi wisata yang menyediakan fitur reservasi paket wisata, manajemen penginapan, berita, diskon, dan pembayaran.
+## Overview
+Desa Wisata LSP is a comprehensive Laravel 11 application that provides an integrated management system for tourist destinations. Built with clean architecture principles, it features tour package reservations, homestay management, news, discounts, and payments, optimized for performance and user experience.
 
-## 📋 Daftar Isi
+## Quick Links
+- **Production**: https://desawisata.example.com
+- **Staging**: https://stg.desawisata.example.com
+- **Technical Documentation**: [TECHNICAL_DOCUMENTATION.md](#)
+- **API Documentation**: [docs/API.md](#)
 
-- [Fitur Utama](#fitur-utama)
-- [Tech Stack](#tech-stack)
-- [Requirements](#requirements)
-- [Instalasi](#instalasi)
-- [Konfigurasi](#konfigurasi)
-- [Struktur Project](#struktur-project)
-- [Endpoint API](#endpoint-api)
-- [Database](#database)
-- [Kontribusi](#kontribusi)
-- [License](#license)
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [Environment Configuration](#environment-configuration)
+- [Development](#development)
+- [Building & Deployment](#building--deployment)
+- [Architecture](#architecture)
+- [Testing](#testing)
+- [Troubleshooting](#troubleshooting)
 
-## ✨ Fitur Utama
+## Features
+- **Integrated Reservation System**: Comprehensive booking for tour packages and homestays.
+- **Role-based Access Control**: Specific dashboards for Admin, Treasurer, Homestay Owners, and Customers.
+- **Content Management**: Built-in news and article system.
+- **Payment & Discounts**: Flexible payment methods with voucher and discount support.
+- **PDF Generation**: Automated invoice and receipt generation via DomPDF.
 
-### Untuk Pelanggan
-- 🏠 Halaman beranda dengan informasi destinasi wisata
-- 📰 Sistem berita dan artikel
-- 🎫 Browsing dan pemesanan paket wisata
-- 🏨 Informasi dan pemesanan penginapan
-- 💳 Sistem pemesanan dengan berbagai metode pembayaran
-- 🎟️ Sistem voucher dan diskon
-- 📋 History dan tracking reservasi
-- 🤝 Halaman about dan contact
+## Environment Configuration
+This project supports different configurations for development and production environments.
 
-### Untuk Admin
-- 👥 Manajemen pengguna dan staff
-- 🎒 Manajemen paket wisata dan kategori
-- 🗺️ Manajemen objek wisata
-- 🏘️ Manajemen penginapan (homestay)
-- 📝 Manajemen berita dan kategori berita
-- 💰 Manajemen diskon dan voucher
-- 💳 Manajemen metode pembayaran
-- ✅ Konfirmasi dan verifikasi reservasi
-- 📊 Dashboard dan reporting
-
-### Untuk Owner Penginapan
-- 🏢 Manajemen properti penginapan
-- 📅 Kelola ketersediaan
-- 💰 Tracking pembayaran
-
-### Untuk Bendahara
-- 💵 Manajemen keuangan
-- 🧮 Laporan pembayaran
-- 📊 Rekap transaksi
-
-## 🚀 Tech Stack
-
-### Backend
-- **Laravel 11** - PHP Web Framework
-- **PHP 8.2+** - Server-side language
-- **MySQL/MariaDB** - Database
-- **DomPDF** - PDF generation (untuk nota pembayaran)
-
-### Frontend
-- **Vite** - Build tool
-- **Tailwind CSS** - Utility-first CSS framework
-- **Bootstrap 5** - UI components
-- **Axios** - HTTP client
-- **JavaScript** - Client-side logic
-
-### Development Tools
-- **Laravel Pint** - Code style fixer
-- **PHPUnit** - Testing framework
-- **Laravel Sail** - Docker environment
-- **Laravel Pail** - Log viewer
-- **Faker** - Data generation
-
-## 📦 Requirements
-
-### Sistem
-- **PHP** 8.2 atau lebih tinggi
-- **Composer** (untuk package manager PHP)
-- **Node.js** 16+ dan **npm** (untuk frontend tooling)
-- **MySQL/MariaDB** 5.7+
-- **Server Web** (Apache/Nginx) dengan mod_rewrite enabled
-
-### Browser
-- Chrome, Firefox, Safari, atau Edge versi terbaru
-
-## 🔧 Instalasi
-
-### 1. Clone Repository
+### Quick Start
+For Local Development (Backend + Frontend)
 ```bash
-cd c:\xampp\htdocs
-git clone <repository-url> desa_wisata_lsp
-cd desa_wisata_lsp
-```
+npm run dev
 
-### 2. Install Dependencies PHP
-```bash
-composer install
-```
+php artisan serve
 
-### 3. Install Dependencies Frontend
-```bash
-npm install
-```
-
-### 4. Setup Environment
-```bash
-cp .env.example .env
-php artisan key:generate
-```
-
-### 5. Konfigurasi Database
-Edit file `.env`:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=desa_wisata_lsp
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-Kemudian jalankan migrasi:
-```bash
-php artisan migrate
-php artisan db:seed
-```
-
-### 6. Build Frontend Assets
-```bash
-npm run build
-```
-
-Atau untuk development dengan auto-rebuild:
-```bash
 npm run dev
 ```
 
-### 7. Jalankan Server
+### Environment Files
+- `.env` - Default/fallback configuration (used for local development)
+- `.env.example` - Template for environment variables
+
+## Available Scripts
+
+### Development
 ```bash
-php artisan serve
+php artisan serve         # Run development server
+npm run dev               # Run Vite development server for frontend assets
+php artisan queue:listen  # Run queue listener for background jobs
 ```
 
-Server akan berjalan di `http://127.0.0.1:8000`
+### Production
+```bash
+npm run build             # Build frontend assets for production
+```
 
-## ⚙️ Konfigurasi
-
-### Environment Configuration
-File `.env` berisi konfigurasi penting:
-- Database credentials
-- Mail configuration
-- Session settings
-- Cache configuration
-
-### Konfigurasi Laravel
-Lihat folder `config/` untuk pengaturan aplikasi:
-- `app.php` - Konfigurasi aplikasi umum
-- `database.php` - Koneksi database
-- `auth.php` - Konfigurasi autentikasi
-- `mail.php` - Konfigurasi email
-- `filesystem.php` - Storage configuration
-
-## 📁 Struktur Project
+## Architecture
+The application follows the MVC (Model-View-Controller) Architecture with clear separation of concerns using Laravel 11:
 
 ```
 desa_wisata_lsp/
 ├── app/
 │   ├── Http/
-│   │   ├── Controllers/          # Route handlers
-│   │   └── Middleware/           # Request middleware
-│   ├── Models/                   # Database models
-│   │   ├── User.php
-│   │   ├── Pelanggan.php
-│   │   ├── Karyawan.php
-│   │   ├── ObyekWisata.php
-│   │   ├── PaketWisata.php
-│   │   ├── Homestay.php
-│   │   ├── Berita.php
-│   │   ├── Diskon.php
-│   │   ├── Reservation.php
-│   │   └── ...
-│   └── Providers/                # Service providers
-├── config/                       # Configuration files
-├── database/
-│   ├── migrations/               # Database schema
-│   ├── seeders/                  # Database seeders
-│   └── factories/                # Model factories
-├── public/
-│   ├── index.php                 # Entry point
-│   ├── storage/                  # User uploads
-│   ├── be/, fe/, fe2/            # Frontend assets
-│   └── vendor/                   # Vendor files
-├── resources/
-│   ├── css/                      # Stylesheets
-│   ├── js/                       # JavaScript files
-│   └── views/                    # Blade templates
-├── routes/
-│   ├── web.php                   # Web routes
-│   └── console.php               # Artisan commands
-├── storage/
-│   ├── app/                      # Application files
-│   ├── framework/                # Framework files
-│   └── logs/                     # Application logs
-├── tests/
-│   ├── Feature/                  # Feature tests
-│   └── Unit/                     # Unit tests
-├── .env.example                  # Environment template
-├── artisan                       # Artisan CLI
-├── composer.json                 # PHP dependencies
-├── package.json                  # NPM dependencies
-├── vite.config.js                # Vite configuration
-├── tailwind.config.js            # Tailwind CSS configuration
-├── postcss.config.js             # PostCSS configuration
-└── phpunit.xml                   # PHPUnit configuration
+│   │   ├── Controllers/  # Route handlers and business logic
+│   │   └── Middleware/   # Request middleware (Authentication, Role checks)
+│   ├── Models/           # Database models (User, Reservation, Homestay, etc.)
+│   └── Providers/        # Service providers for application bootstrapping
+├── config/               # Configuration files
+├── database/             # Migrations, Seeders, and Factories
+├── public/               # Public entry point (index.php) and compiled assets
+├── resources/            # Views (Blade templates), CSS, and JS
+├── routes/               # Web and Console route definitions
+└── tests/                # Feature and Unit tests
 ```
 
-## 🔌 Endpoint API
+## Getting Started
 
-### Pelanggan
-- `GET /` - Halaman beranda
-- `GET /about` - Halaman tentang
-- `GET /contact` - Halaman kontak
-- `GET /news` - Daftar berita
-- `GET /news/{id}` - Detail berita
-- `GET /wisata` - Daftar paket wisata
-- `GET /voucher` - Daftar voucher/diskon
-- `GET /reservasi/{id_paket}` - Form pemesanan
-- `POST /reservasi` - Simpan pemesanan
-- `GET /history-reservasi` - History pemesanan
+### Prerequisites
+- PHP 8.2 or higher
+- Composer (PHP package manager)
+- Node.js 16+ and npm
+- MySQL/MariaDB 5.7+
+- Modern browser
 
-### Admin Routes
-- `/admin/users` - Manajemen pengguna
-- `/admin/karyawan` - Manajemen karyawan
-- `/admin/paket-wisata` - Manajemen paket
-- `/admin/obyek-wisata` - Manajemen objek wisata
-- `/admin/homestay` - Manajemen penginapan
-- `/admin/berita` - Manajemen berita
-- `/admin/diskon` - Manajemen diskon
-- `/admin/jenis-pembayaran` - Manajemen metode pembayaran
-- `/admin/confirm-reservasi` - Konfirmasi reservasi
-
-Untuk informasi lengkap routes, lihat [routes/web.php](routes/web.php).
-
-## 🗄️ Database
-
-### Models Utama
-- **User** - Pengguna admin/staff
-- **Pelanggan** - Data pelanggan
-- **Karyawan** - Data karyawan
-- **ObyekWisata** - Destinasi wisata
-- **KategoriWisata** - Kategori destinasi
-- **PaketWisata** - Paket tour yang ditawarkan
-- **Homestay** - Penginapan
-- **Reservation** - Pemesanan
-- **Berita** - Artikel berita
-- **KategoriBerita** - Kategori artikel
-- **Diskon** - Promo dan diskon
-- **JenisPembayaran** - Metode pembayaran
-
-### Migrations
-Semua schema database didefinisikan dalam folder `database/migrations/`. Untuk menjalankan:
-```bash
-php artisan migrate              # Jalankan semua migrasi
-php artisan migrate:rollback    # Batalkan migrasi terakhir
-php artisan migrate:refresh     # Reset dan jalankan ulang
-```
-
-## 👥 Role & Permissions
-
-Project ini memiliki beberapa role:
-- **Admin** - Full access ke sistem
-- **Bendahara** - Mengelola keuangan
-- **Owner Penginapan** - Mengelola properti
-- **Pelanggan** - Browse dan pesan paket
-
-## 📚 Artisan Commands
-
-Perintah Laravel yang sering digunakan:
+### Installation
 
 ```bash
-# Development
-php artisan serve                           # Jalankan development server
-php artisan tinker                          # Interactive shell
+# 1. Clone the repository
+git clone <repository-url> desa_wisata_lsp
+cd desa_wisata_lsp
 
-# Database
-php artisan migrate                         # Jalankan migrasi
-php artisan db:seed                         # Jalankan seeder
-php artisan migrate:refresh --seed          # Reset database
+# 2. Install PHP dependencies
+composer install
 
-# Generate
-php artisan make:controller ControllerName  # Buat controller
-php artisan make:model ModelName            # Buat model
-php artisan make:migration table_name       # Buat migrasi
-php artisan make:seeder SeederName          # Buat seeder
+# 3. Install Frontend dependencies
+npm install
 
-# Cache & Config
-php artisan cache:clear                     # Bersihkan cache
-php artisan config:cache                    # Cache konfigurasi
-php artisan view:clear                      # Bersihkan view cache
+# 4. Setup Environment
+cp .env.example .env
+php artisan key:generate
 
-# Testing
-php artisan test                            # Jalankan test suite
+# 5. Configure Database
+# Edit your .env file to match your database credentials
+# DB_DATABASE=desa_wisata_lsp
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-# Code Quality
-php ./vendor/bin/pint                       # Fix code style
+# 6. Run Migrations and Seeders
+php artisan migrate --seed
+
+# 7. Build frontend assets
+npm run build
+
+# 8. Start development server
+php artisan serve
 ```
 
-## 🧪 Testing
+## Core Features
 
-Jalankan test suite dengan:
+### Customer Experience
+- **Home & Information**: Browse tourism destinations, news, and packages.
+- **Booking System**: Seamless reservation for tours and accommodations.
+- **Payment Processing**: Multiple payment methods supported securely.
+- **History Tracking**: Track previous and current reservations.
+
+### Administrative Control
+- **User Management**: Manage staff, owners, and customers.
+- **Catalog Management**: Manage tourism objects, packages, and categories.
+- **Financial Dashboard**: Treasurer tools for financial reporting and tracking.
+- **Property Management**: Homestay owners can manage availability and tracking.
+
+## 🛠️ Technical Stack
+
+### Core Technologies
+- **Laravel 11** - PHP Web Framework for backend operations
+- **PHP 8.2+** - Advanced server-side language
+- **MySQL/MariaDB** - Relational Database Management System
+- **Vite 6+** - Next-generation build tool and dev server
+
+### Frontend Technologies
+- **Tailwind CSS 3** - Utility-first CSS framework for rapid UI development
+- **Bootstrap 5** - Standard UI components
+- **Axios** - HTTP client for API requests
+- **Blade Templating** - Laravel's powerful server-side templating engine
+
+### Development Tools
+- **Laravel Pint** - Opinionated PHP code style fixer
+- **PHPUnit 11** - Robust testing framework
+- **Laravel Sail** - Light-weight command-line interface for interacting with Docker
+- **Laravel Pail** - Real-time log viewer
+
+## Development Guidelines
+
+### Code Style
+- Follow PSR-12 coding standards.
+- Use `php ./vendor/bin/pint` for automatic code styling.
+- Keep controllers thin by moving complex business logic to Services or Models.
+
+### Artisan Commands Reference
 ```bash
-php artisan test
+# Generate classes
+php artisan make:controller ControllerName
+php artisan make:model ModelName -m
+php artisan make:seeder SeederName
+
+# Cache management
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
 ```
 
-Test files terletak di folder `tests/`.
+## Deployment
 
-## 📝 Logging
-
-Log aplikasi disimpan di `storage/logs/`. Untuk melihat log secara real-time:
-```bash
-php artisan pail
-```
-
-## 🌐 Deployment
-
-### Production Checklist
-
-1. **Environment**
+### Production Deployment Steps
+1. **Environment**: Update `.env` with production database and set `APP_ENV=production`, `APP_DEBUG=false`.
+2. **Dependencies**: 
    ```bash
-   cp .env.production .env
-   # Sesuaikan konfigurasi database, mail, dll
+   composer install --optimize-autoloader --no-dev
+   npm install
    ```
-
-2. **Build**
+3. **Build Assets**:
    ```bash
    npm run build
+   ```
+4. **Cache Configurations**:
+   ```bash
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
    ```
-
-3. **Database**
+5. **Database Migration**:
    ```bash
    php artisan migrate --force
    ```
-
-4. **Permissions**
+6. **Permissions**: Ensure `storage` and `bootstrap/cache` are writable by the web server.
    ```bash
-   chmod -R 755 storage bootstrap/cache
+   chmod -R 775 storage bootstrap/cache
    ```
 
-5. **Web Server**
-   - Point document root ke `public/`
-   - Configure SSL/HTTPS
-   - Setup cron job untuk scheduling:
-     ```bash
-     * * * * * php /path/to/artisan schedule:run
-     ```
+## Troubleshooting
 
-## 🐛 Troubleshooting
-
-### Port 8000 sudah digunakan
+### Port 8000 already in use
 ```bash
 php artisan serve --port=8001
 ```
 
-### Permission denied pada storage
+### Permission denied on storage (Linux/macOS)
 ```bash
 chmod -R 775 storage bootstrap/cache
 ```
 
 ### Database connection error
-- Pastikan MySQL running
-- Verifikasi credentials di `.env`
-- Buat database: `CREATE DATABASE desa_wisata_lsp;`
+- Verify MySQL is running locally or remotely.
+- Check database credentials in `.env`.
+- Ensure database exists: `CREATE DATABASE desa_wisata_lsp;`
 
-### Frontend assets tidak terupdate
+### Frontend assets not updating
 ```bash
 npm run dev      # Restart dev server
-npm run build    # Rebuild assets
+npm run build    # Rebuild assets for production
 ```
 
-## 📞 Kontribusi
+## Additional Resources
+- **Routes**: See `routes/web.php` for all application endpoints.
+- **Database Schema**: Check `database/migrations/` for table structures.
+- **Controllers**: Located in `app/Http/Controllers/`.
+- **Models**: Located in `app/Models/`.
 
-Untuk berkontribusi pada project ini:
+## Latest Updates (August 2026)
+### Recent Enhancements
+- Upgraded to Laravel 11 for improved security and performance
+- Implemented Vite 6 for faster frontend asset bundling
+- Enhanced Role-based Access Control (RBAC) mechanisms
+- Added comprehensive automated testing support with PHPUnit 11
+- Improved database seeding with localized Faker data
 
-1. Fork repository
-2. Buat branch feature (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buat Pull Request
-
-## 📄 License
-
-Project ini menggunakan License MIT. Lihat file [LICENSE](LICENSE) untuk detailnya.
-
-## 👨‍💻 Support
-
-Jika ada pertanyaan atau masalah, silakan buat issue di repository ini.
-
----
-
-**Last Updated:** May 2026
+For LSP Use
+© 2026 Desa Wisata Development
